@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OTP Email</title>
+  <style>
+    body {
+      font-family: Helvetica, Arial, sans-serif;
+      min-width: 1000px;
+      overflow: auto;
+      line-height: 2;
+    }
+    .container {
+      margin: 50px auto;
+      width: 70%;
+      padding: 20px 0;
+    }
+    .header {
+      border-bottom: 1px solid #eee;
+    }
+    .header a {
+      font-size: 1.4em;
+      color: #00466a;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .content {
+      font-size: 1.1em;
+    }
+    .otp {
+      background: #00466a;
+      margin-left: 23rem;
+      width: max-content;
+      padding: 0 10px;
+      color: #fff;
+      border-radius: 4px;
+    }
+    .footer {
+      border-top: 1px solid #eee;
+      color: #aaa;
+      font-size: 0.8em;
+      line-height: 1;
+      font-weight: 300;
+      text-align: right;
+      padding: 8px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <a href="#">Never Alone Again</a>
+    </div>
+    <p class="content">Hi,</p>
+    <p class="content">Thank you for choosing <b style="color:#0A0301">Never Alone Again</b>. Use the OTP below for verification. It is valid for 5 minutes.</p>
+    <h2 class="otp"><%= otpCode %></h2>
+    <p class="content">Regards,<br /><b style="color:#0A0301">NeverAloneAgain</b></p>
+    <hr />
+    <div class="footer">
+      <!-- Additional footer content can go here -->
+    </div>
+  </div>
+</body>
+</html>

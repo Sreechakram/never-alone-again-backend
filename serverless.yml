@@ -1,0 +1,22 @@
+service: never-alone-again-api
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: ap-south-1  # or your region
+  environment:
+    DB_HOST: never-alone-again-dev-database.c9kes22a0y1i.ap-south-1.rds.amazonaws.com
+    DB_USER: admin
+    DB_PASS: Qartz12341
+    DB_NAME: never-alone-again-dev-database
+
+functions:
+  app:
+    handler: handler.handler
+    events:
+      - http:
+          path: /{proxy+}
+          method: any
+
+plugins:
+  - serverless-offline
