@@ -61,13 +61,12 @@ exports.signup = async (req, res, next) => {
     }
 
     try {
-        const existingUser = await User.findOne({ where: { email } });
-
+        const existingUser = await User.findOne({ where: { email }});
         // Check if the user already exists and is not verified
         if (existingUser) {
             if (existingUser.verifiedAt) {
                 // If the user is already verified, skip OTP and proceed with login
-                return res.status(200).json({ status: false, message: 'User is already verified. Please log in.' });
+                return res.status(200).json({ status: false, message: 'User is already verified. Please log in.'});
             } else {
                 // If the user exists but hasn't verified, resend OTP
                 const otpCode = generateOTP();

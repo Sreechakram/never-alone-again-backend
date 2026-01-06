@@ -1,61 +1,58 @@
 'use strict';
-const { v4: uuidv4 } = require('uuid'); // Import uuidv4
+const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-  const UserRole = sequelize.define('UserRole', {
-    id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true,
-      allowNull: false
-    },
-    uuid: {
-      type: DataTypes.UUID,
-      defaultValue: uuidv4(), // Set uuidv4 as the default value
-      allowNull: false,
-      unique: true
-    },
-    userId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'Users',
-        key: 'id'
-      },
-      
-      onUpdate: 'CASCADE',
-      onDelete: 'CASCADE'
-    },
-    roleId: {
-      type: DataTypes.INTEGER,
-      allowNull: false, // Still required, but no foreign key reference
-    },
-    createdAt: {
-      type: DataTypes.DATE,
-      allowNull: false
-    },
-    updatedAt: {
-      type: DataTypes.DATE,
-      allowNull: false
-    },
-    deletedAt: {
-      type: DataTypes.DATE,
-      allowNull: true
+  class UserRole extends Model {
+    static associate(models) {
+      // Each UserRole belongs to a User and to a Role
+      UserRole.belongsTo(models.User, { foreignKey: 'userId' });
+      UserRole.belongsTo(models.Role, { foreignKey: 'roleId' });
     }
-  }, {
-    timestamps: true,
-    paranoid: true, // Enable soft delete (deletedAt)
-    tableName: 'UserRoles'
-  });
+  }
 
-  UserRole.associate = (models) => {
-    // Associate UserRole with User
-    UserRole.belongsTo(models.User, {
-      foreignKey: 'userId',
-      onUpdate: 'CASCADE',
-      onDelete: 'CASCADE'
-    });
-  };
+  UserRole.init(
+    {
+      id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        allowNull: false,
+        primaryKey: true,
+      },
+
+      uuid: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,   // IMPORTANT: same fix as User/OTP
+        allowNull: false,
+        unique: true,
+      },
+
+      userId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+
+      roleId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+
+      createdAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
+      },
+
+      updatedAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
+      },
+    },
+    {
+      sequelize,
+      modelName: 'UserRole',
+      tableName: 'UserRoles',  // make sure this matches your migration
+      timestamps: true,
+    }
+  );
 
   return UserRole;
 };

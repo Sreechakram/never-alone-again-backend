@@ -8,7 +8,7 @@ const { updateUser } = require('../../../controller/role2/authentication/update'
 const authenticateJWT = require('../../../middleware/authMiddleware');
 
 router.post('/signup', signup);
-router.get('/login', login);
+router.post('/login', login);
 router.post('/forgot-password', forgotPassword);
 router.post('/updatePassword', resetPassword);
 router.post('/verify-otp', verifyOTP);
