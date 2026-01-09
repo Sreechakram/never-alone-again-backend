@@ -36,7 +36,7 @@ const sendOTPEmail = async (email, otpCode) => {
     const mailOptions = {
         from: process.env.EMAIL,
         to: email,
-        subject: 'SKILLIOS Password Reset OTP',
+        subject: 'N-A-G Password Reset OTP',
         html: html
     };
 
