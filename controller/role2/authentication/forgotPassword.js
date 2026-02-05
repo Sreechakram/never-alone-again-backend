@@ -1,5 +1,3 @@
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 const { User, OTP } = require('../../../models');
 const nodemailer = require('nodemailer');
 const { v4: uuidv4 } = require('uuid');
@@ -100,8 +98,8 @@ exports.resetPassword = async (req, res, next) => {
             return res.status(400).json({ status: false, message: 'Invalid OTP code' });
         }
 
-        const hashedPassword = await bcrypt.hash(password, 10);
-        await user.update({ password: hashedPassword });
+        // const hashedPassword = await bcrypt.hash(password, 10);
+        await user.update({ password: password });
 
         res.status(200).json({
             status: true,

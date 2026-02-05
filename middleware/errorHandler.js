@@ -3,6 +3,19 @@ const jwt = require('jsonwebtoken');
 
 const errorHandler = (err, req, res, next) => {
   // Sequelize Validation Error
+if (err instanceof ValidationError) {
+  const validationErrors = err.errors.map(e => ({
+    field: e.path,
+    message: e.message,
+  }));
+
+  return res.status(400).json({
+    message: validationErrors[0]?.message || 'Validation failed',
+    errors: validationErrors,
+  });
+}
+
+  // Sequelize Validation Error
   if (err instanceof ValidationError) {
     const validationErrors = err.errors.map(error => error.message);
     return res.status(400).json({
