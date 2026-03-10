@@ -150,6 +150,16 @@ module.exports = (sequelize, DataTypes) => {
             user.password = await bcrypt.hash(user.password, 10);
           }
         },
+        beforeUpdate: async (user) => {
+          if (user.changed("email") && user.email) {
+            user.email = user.email.trim().toLowerCase();
+          }
+
+          if (user.changed("password") && user.password) {
+            const bcrypt = require("bcryptjs");
+            user.password = await bcrypt.hash(user.password, 10);
+          }
+        },
       },
     }
   );
